@@ -30,7 +30,6 @@ public class OneCrotroller {
             System.out.println(c.getName() + " " +c.getValue());
         }
 
-
         //获取参数
         String username = request.getParameter("username");
         if (username == "" || username == null) {
