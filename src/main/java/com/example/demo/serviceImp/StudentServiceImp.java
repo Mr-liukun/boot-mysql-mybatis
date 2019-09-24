@@ -33,15 +33,13 @@ public class StudentServiceImp implements StudentService {
 
         String key = id + name;
 
-        String value = redis.get(key);
-        if(value != null && value != "") {
+        Student value = (Student) redis.get(key);
+        if(value != null ) {
             try {
-                Student student = (Student)redis.SeriaToObject(value);
-                if(student == null){
-                    log.error("对象解码出错");
-                }
-                log.info("从缓存获取: "+student.toString());
-                return student;
+//                Student student = (Student)redis.SeriaToObject(value);
+
+                log.info("从缓存获取: "+value.toString());
+                return value;
             }catch (Exception e) {
                 e.printStackTrace();
             }
@@ -49,8 +47,7 @@ public class StudentServiceImp implements StudentService {
 
         Student student = studentDao.getStudentInfoByIdAndName(id, name);
         try{
-            String str = redis.ObjectToSeria(student);
-            if(redis.set(key, str) == true) {
+            if(redis.set(key, student) == true) {
                 log.info("redis缓存设置成功");
             }
 

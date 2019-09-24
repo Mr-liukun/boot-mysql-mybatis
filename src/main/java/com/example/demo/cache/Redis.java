@@ -20,10 +20,10 @@ public class Redis {
 
     //@Autowired
     @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     // 获取缓存
-    public String get(String key) {
+    public Object get(String key) {
 //        //批量删除
 //        List<String> list = new ArrayList<String>();
 //        list.add("qwe");
@@ -38,7 +38,7 @@ public class Redis {
     }
 
     // 设置缓存
-    public boolean set(String key, String value) {
+    public boolean set(String key, Object value) {
         boolean result = false;
         try{
             redisTemplate.opsForValue().set(key, value);
