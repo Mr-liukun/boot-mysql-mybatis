@@ -1,7 +1,12 @@
 package com.example.demo.model;
 
 
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable {
+
+    // alt+enter
+    private static final long serialVersionUID = 1388594774613074515L;
 
     private int id;
 
@@ -30,6 +35,7 @@ public class Student {
     }
 
     public void setScore(float score) {
+
         this.score = score;
     }
 

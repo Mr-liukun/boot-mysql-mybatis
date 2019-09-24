@@ -16,4 +16,8 @@
     <select id="getStudentInfoById" resultMap="BaseResultMap" parameterType="int">
         select id, name, score from stu where id = #{id}
     </select>
+
+    <select id="getStudentInfoByIdAndName" resultMap="BaseResultMap">
+        select id, name, score from stu where id =#{id} and name = #{name}
+    </select>
 </mapper>

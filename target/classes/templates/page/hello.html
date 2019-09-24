@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+    <script type="text/javascript" src="/js/jquery-3.2.1.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<script type="text/javascript">
+    function fun() {
+        // $.ajax({
+        //     type:'get',
+        //     url:"/one",
+        //     data:{id:2},
+        //     success:function(data){
+        //        console.log(data);
+        //     }
+        // });
+        // $.getJSON("http://localhost:8080/one?id=2", function (result, status) {
+        //     var v = new Vue({
+        //         el: '#main',
+        //         data: {
+        //             rows: result
+        //         }
+        //     })
+        // });
+
+        $.ajax({
+            type:'get',
+            url:"/one",
+            data:{id:2},
+            success:function(data){
+                var v = new Vue({
+                    el: '#main',
+                    data: {
+                        rows: data,
+                    }
+                })
+            }
+        });
+
+
+    }
+</script>
+<body>
+<h1 th:text="${hello}"></h1>
+<a href="javascript:fun()">点我</a>
+<div id="main">
+    <table border=1>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+            <td>score</td>
+        </tr>
+            <td>{{rows.id}}</td>
+            <td>{{rows.name}}</td>
+            <td>{{rows.score}}</td>
+        </tr>
+    </table>
+</div>
+
+<img src="/img/one.jpg">
+</body>
+</html>

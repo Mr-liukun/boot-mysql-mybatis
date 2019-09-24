@@ -7,4 +7,8 @@ import org.apache.ibatis.annotations.Param;
 public interface StudentDao {
 
     Student getStudentInfoById(@Param("id") int id);
+
+    Student getStudentInfoByIdAndName(@Param("id") int id, @Param("name") String name);
+
+
 }
