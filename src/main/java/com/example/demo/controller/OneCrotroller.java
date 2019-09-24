@@ -76,6 +76,18 @@ public class OneCrotroller {
         return stu;
     }
 
+    @ResponseBody
+    @RequestMapping("/clear")
+    public boolean clearKey(HttpServletRequest request) {
+        String idStr = request.getParameter("id");
+        String name = request.getParameter("name");
+        int id = Integer.valueOf(idStr);
+        if(stuServiceImp.clearKey(id, name)){
+            return true;
+        }
+        return false;
+    }
+
 
 
 

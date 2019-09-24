@@ -31,12 +31,15 @@ public class StudentServiceImp implements StudentService {
     @Override
     public Student getStudentByIdAndName(int id, String name) {
 
-        String key =id + name;
+        String key = id + name;
 
-        byte[] value = redis.get(key);
-        if(value != null && value.length != 0) {
+        String value = redis.get(key);
+        if(value != null && value != "") {
             try {
                 Student student = (Student)redis.SeriaToObject(value);
+                if(student == null){
+                    log.error("对象解码出错");
+                }
                 log.info("从缓存获取: "+student.toString());
                 return student;
             }catch (Exception e) {
@@ -46,7 +49,7 @@ public class StudentServiceImp implements StudentService {
 
         Student student = studentDao.getStudentInfoByIdAndName(id, name);
         try{
-            byte[] str = redis.ObjectToSeria(student);
+            String str = redis.ObjectToSeria(student);
             if(redis.set(key, str) == true) {
                 log.info("redis缓存设置成功");
             }
@@ -59,5 +62,16 @@ public class StudentServiceImp implements StudentService {
         log.info("从数据库获取");
         return student;
 
+    }
+
+    @Override
+    public boolean clearKey(int id, String name) {
+        String key = id + name;
+        if(redis.delete(key) == true) {
+            log.info("删除缓存成功");
+            return true;
+        }
+        log.info("删除缓存失败");
+        return false;
     }
 }

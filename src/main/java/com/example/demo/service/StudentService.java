@@ -8,4 +8,7 @@ public interface StudentService {
 
     Student getStudentByIdAndName(int id, String name);
 
+    boolean clearKey(int id, String name);
+
+
 }

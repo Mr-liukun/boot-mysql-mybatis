@@ -4,26 +4,41 @@ package com.example.demo.cache;
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.apache.commons.io.IOCase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.Set;
 
 @Component
 public class Redis {
 
     //@Autowired
     @Resource
-    private RedisTemplate<String, byte[]> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     // 获取缓存
-    public byte[] get(String key) {
+    public String get(String key) {
+//        //批量删除
+//        List<String> list = new ArrayList<String>();
+//        list.add("qwe");
+//        list.add("asd");
+//        redisTemplate.delete(list);
+
+        //删除所有key
+//        Set<String> set = redisTemplate.keys("*");
+//        redisTemplate.delete(set);
+
         return redisTemplate.opsForValue().get(key);
     }
 
     // 设置缓存
-    public boolean set(String key, byte[] value) {
+    public boolean set(String key, String value) {
         boolean result = false;
         try{
             redisTemplate.opsForValue().set(key, value);
@@ -46,23 +61,26 @@ public class Redis {
         return result;
     }
 
-    public byte[] ObjectToSeria(Object obj) throws IOException {
-
+    //序列化
+    public String ObjectToSeria(Object obj) throws IOException {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         ObjectOutputStream objectOutputStream;
         objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
         objectOutputStream.writeObject(obj);
-        //String string = byteArrayOutputStream.toString("UTF-8");
         byte[] by = byteArrayOutputStream.toByteArray();
-
+        Base64.Encoder encoder = Base64.getEncoder();
+        String str = encoder.encodeToString(by);
         objectOutputStream.close();
         byteArrayOutputStream.close();
-        return by;
+        return str;
     }
 
-    public Object SeriaToObject(byte[] str) throws IOException, ClassNotFoundException {
+    //反序列化
+    public Object SeriaToObject(String str) throws IOException, ClassNotFoundException {
 
-        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(str);
+        Base64.Decoder decoder = Base64.getDecoder();
+        byte[] by = decoder.decode(str);
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(by);
         ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
         Object object = objectInputStream.readObject();
         objectInputStream.close();
