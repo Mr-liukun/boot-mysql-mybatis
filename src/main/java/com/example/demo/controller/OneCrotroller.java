@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.model.Student;
+import com.example.demo.service.StudentService;
 import com.example.demo.serviceImp.StudentServiceImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +21,12 @@ import javax.servlet.http.HttpServletRequest;
 public class OneCrotroller {
 
     @Autowired
-    private StudentServiceImp stuServiceImp;
-
+    // private StudentServiceImp stuServiceImp;
+    private StudentService stuServiceImp;
     private static final Logger log = LoggerFactory.getLogger(OneCrotroller.class);
 
     @RequestMapping("/")
-    public String Hello(Model model) {
+    public String hello(Model model) {
 
         model.addAttribute("hello", "你好，刘坤");
 
@@ -33,7 +34,7 @@ public class OneCrotroller {
     }
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String Index(HttpServletRequest request, Model model) {
+    public String index(HttpServletRequest request, Model model) {
 
 //        //获取cookie
 //        Cookie []cookie = request.getCookies();
@@ -57,7 +58,7 @@ public class OneCrotroller {
 
     @ResponseBody
     @RequestMapping(value = "/one")
-    public Student One(HttpServletRequest request) {
+    public Student one(HttpServletRequest request) {
         String idStr = request.getParameter("id");
         String name = request.getParameter("name");
         int id = Integer.valueOf(idStr);
@@ -82,14 +83,11 @@ public class OneCrotroller {
         String idStr = request.getParameter("id");
         String name = request.getParameter("name");
         int id = Integer.valueOf(idStr);
-        if(stuServiceImp.clearKey(id, name)){
+        if (stuServiceImp.clearKey(id, name)) {
             return true;
         }
         return false;
     }
-
-
-
 
 
 }

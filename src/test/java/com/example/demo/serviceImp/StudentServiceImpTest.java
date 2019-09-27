@@ -45,4 +45,12 @@ public class StudentServiceImpTest {
         boolean result = studentServiceImp.clearKey(id, name);
         Assert.assertEquals(true, result);
     }
+
+    @Test
+    public void addStudent() {
+        String name = "wangwu";
+        float score = 187;
+        boolean result = studentServiceImp.addStudent(name, score);
+        Assert.assertEquals(true, result);
+    }
 }

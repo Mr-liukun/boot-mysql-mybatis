@@ -10,5 +10,7 @@ public interface StudentDao {
 
     Student getStudentInfoByIdAndName(@Param("id") int id, @Param("name") String name);
 
+    Integer addStudent(Student stu);
+
 
 }

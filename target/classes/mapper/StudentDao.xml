@@ -20,4 +20,8 @@
     <select id="getStudentInfoByIdAndName" resultMap="BaseResultMap">
         select id, name, score from stu where id =#{id} and name = #{name}
     </select>
+
+    <insert id="addStudent" useGeneratedKeys="true" keyProperty="id" parameterType="com.example.demo.model.Student">
+        insert into stu(name, score) values(#{name}, #{score})
+    </insert>
 </mapper>

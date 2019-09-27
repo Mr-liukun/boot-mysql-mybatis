@@ -10,5 +10,7 @@ public interface StudentService {
 
     boolean clearKey(int id, String name);
 
+    boolean addStudent(String name, float score);
+
 
 }

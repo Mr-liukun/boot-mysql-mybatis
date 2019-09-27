@@ -1,19 +1,12 @@
 package com.example.demo.cache;
 
-
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-import org.apache.commons.io.IOCase;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.*;
-import java.util.ArrayList;
+
 import java.util.Base64;
-import java.util.List;
-import java.util.Set;
 
 @Component
 public class Redis {
@@ -87,9 +80,6 @@ public class Redis {
         byteArrayInputStream.close();
         return object;
     }
-
-
-
 
 }
 

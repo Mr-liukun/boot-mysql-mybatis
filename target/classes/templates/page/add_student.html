@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加用户</title>
+    <script type="text/javascript" src="/js/jquery-3.2.1.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<script>
+
+    function add() {
+        $.ajax({
+            type:'get',
+            url:'/add',
+            data:{name:$("#addname").val()},
+            success:function (data) {
+               if(data == true) {
+                   alert("添加成功");
+                   return true;
+               }else{
+                   alert("添加失败");
+                   return false;
+               }
+
+            }
+        })
+    }
+</script>
+<body>
+
+<form action="/add" method="post">
+    <input id="addname" type="text" name="name">
+    <input type="text" name="score">
+    <input type="submit" name="添加" onclick="add()">
+</form>
+
+</body>
+</html>

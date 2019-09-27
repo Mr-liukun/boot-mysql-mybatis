@@ -1,7 +1,6 @@
 package com.example.demo.serviceImp;
 
 import com.example.demo.cache.Redis;
-import com.example.demo.controller.OneCrotroller;
 import com.example.demo.mapper.StudentDao;
 import com.example.demo.model.Student;
 import com.example.demo.service.StudentService;
@@ -33,30 +32,20 @@ public class StudentServiceImp implements StudentService {
 
         String key = id + name;
 
-        Student value = (Student) redis.get(key);
+        Student value = (Student)redis.get(key);
         if(value != null ) {
-            try {
-//                Student student = (Student)redis.SeriaToObject(value);
-
-                log.info("从缓存获取: "+value.toString());
-                return value;
-            }catch (Exception e) {
-                e.printStackTrace();
-            }
+            log.info("从缓存获取: " + value.toString());
+            return value;
         }
 
         Student student = studentDao.getStudentInfoByIdAndName(id, name);
-        try{
-            if(redis.set(key, student) == true) {
-                log.info("redis缓存设置成功");
-            }
 
-        }catch(Exception e) {
-            log.error("缓存设置失败");
-            e.printStackTrace();
-
+            //String str = redis.ObjectToSeria(student);
+        if (redis.set(key, student) == true) {
+            log.info("redis缓存设置成功");
+        }else{
+            log.error("redis缓存设置失败");
         }
-        log.info("从数据库获取");
         return student;
 
     }
@@ -70,5 +59,25 @@ public class StudentServiceImp implements StudentService {
         }
         log.info("删除缓存失败");
         return false;
+    }
+
+    @Override
+    public boolean addStudent(String name, float score) {
+        Student stu  = new Student();
+        stu.setName(name);
+        stu.setScore(score);
+
+        Integer re = studentDao.addStudent(stu);
+        Integer result = stu.getId();
+
+        log.info("id:", result);
+        log.info("id:", re);
+
+        if (result == 0) {
+            return false;
+        } else {
+            return true;
+        }
+
     }
 }

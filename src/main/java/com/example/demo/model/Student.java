@@ -1,24 +1,27 @@
 package com.example.demo.model;
 
 
+import org.springframework.stereotype.Component;
+
 import java.io.Serializable;
 
+@Component
 public class Student implements Serializable {
 
     // alt+enter
     private static final long serialVersionUID = 1388594774613074515L;
 
-    private int id;
+    private Integer id;
 
     private String name;
 
     private float score;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
